@@ -1,0 +1,67 @@
+@font-face {
+  font-family: "home"; /* Project id 3522019 */
+  src: url('iconfont.woff2?t=1657780509333') format('woff2'),
+       url('iconfont.woff?t=1657780509333') format('woff'),
+       url('iconfont.ttf?t=1657780509333') format('truetype');
+}
+
+.home {
+  font-family: "home" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.home-sousuo:before {
+  content: "\e62f";
+}
+
+.home-shouye:before {
+  content: "\e64f";
+}
+
+.home-zixun:before {
+  content: "\e62d";
+}
+
+.home-dituzhaofang:before {
+  content: "\e603";
+}
+
+.home-zufang:before {
+  content: "\e611";
+}
+
+.home-shouye1:before {
+  content: "\e62e";
+}
+
+.home-pengyou:before {
+  content: "\e61a";
+}
+
+.home-lianxiwomen:before {
+  content: "\e663";
+}
+
+.home-wode:before {
+  content: "\e633";
+}
+
+.home-jilu:before {
+  content: "\e6df";
+}
+
+.home-ditu:before {
+  content: "\e8ad";
+}
+
+.home-identity-card:before {
+  content: "\e7e8";
+}
+
+.home-sousuo1:before {
+  content: "\e75b";
+}
+
