@@ -17,14 +17,14 @@
         v-model="username"
         name="账号"
         placeholder="请输入账号"
-        :rules="[{ required: true, message: '请输入账号' }]"
+        :rules="usernameRules"
       />
       <van-field
         v-model="password"
         :type="type"
         name="密码"
         placeholder="请输入密码"
-        :rules="[{ required: true, message: '请输入密码' }]"
+        :rules="passwordRules"
       >
         <template #right-icon>
           <van-icon name="eye-o" v-if="flag == 1" @click="pswEye" />
@@ -46,13 +46,16 @@
 
 <script>
 import { login } from '@/api/user'
+import { usernameRules, passwordRules } from './rules'
 export default {
   data () {
     return {
       username: '',
       password: '',
       flag: 0,
-      type: 'password'
+      type: 'password',
+      usernameRules,
+      passwordRules
     }
   },
   methods: {
@@ -60,8 +63,28 @@ export default {
       this.$router.back()
     },
     async login () {
-      const res = await login(this.password, this.password)
-      console.log(res)
+      this.$toast.loading({
+        message: '不要着急，加载中..',
+        forbidClick: true
+      })
+      try {
+        const res = await login(this.username, this.password)
+        console.log(res)
+        this.$toast.success('登录成功')
+        // if (res.data.status === 200) {
+        //   this.$toast.success('登录成功')
+        // } else {
+        //   this.$toast.fail(res.data.description)
+        // }
+      } catch (err) {
+        // console.log(error)S
+        console.log(err)
+        if (err.response.status === 401) {
+          this.$toast.fail('账号或密码错误')
+        } else {
+          this.$toast.fail('登录失败')
+        }
+      }
     },
     pswEye () {
       if (this.flag) {
