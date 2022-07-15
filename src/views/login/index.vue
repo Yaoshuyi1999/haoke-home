@@ -14,13 +14,13 @@
     <!-- 账号密码 -->
     <van-form @submit="login" class="form">
       <van-field
-        v-model="username"
+        v-model="user.username"
         name="账号"
         placeholder="请输入账号"
         :rules="usernameRules"
       />
       <van-field
-        v-model="password"
+        v-model="user.password"
         :type="type"
         name="密码"
         placeholder="请输入密码"
@@ -50,8 +50,10 @@ import { usernameRules, passwordRules } from './rules'
 export default {
   data () {
     return {
-      username: '',
-      password: '',
+      user: {
+        username: '',
+        password: ''
+      },
       flag: 0,
       type: 'password',
       usernameRules,
@@ -68,22 +70,21 @@ export default {
         forbidClick: true
       })
       try {
-        const res = await login(this.username, this.password)
+        const res = await login(this.user)
+        this.$store.commit('setUser', res.data.body.token)
         console.log(res)
         this.$toast.success('登录成功')
-        // if (res.data.status === 200) {
-        //   this.$toast.success('登录成功')
-        // } else {
-        //   this.$toast.fail(res.data.description)
-        // }
-      } catch (err) {
-        // console.log(error)S
-        console.log(err)
-        if (err.response.status === 401) {
-          this.$toast.fail('账号或密码错误')
+        if (res.data.status === 200) {
+          this.$toast.success('登录成功')
         } else {
-          this.$toast.fail('登录失败')
+          this.$toast.fail(res.data.description)
         }
+        this.$router.push('/layout/my')
+      } catch (err) {
+        // console.log(error)
+        console.log(err)
+        this.$toast.fail('登录失败')
+        // }
       }
     },
     pswEye () {
