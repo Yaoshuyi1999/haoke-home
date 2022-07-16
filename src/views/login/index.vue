@@ -1,16 +1,7 @@
 <template>
   <div>
     <!-- 头部导航栏 -->
-    <van-nav-bar
-      title="账号登录"
-      @click-left="goBack"
-      class="navbar"
-      style="height: 45px"
-    >
-      <template #left>
-        <van-icon name="arrow-left" />
-      </template>
-    </van-nav-bar>
+     <Head title="账号登录"></Head>
     <!-- 账号密码 -->
     <van-form @submit="login" class="form">
       <van-field
@@ -45,9 +36,13 @@
 </template>
 
 <script>
+import Head from '@/components/head.vue'
 import { login } from '@/api/user'
 import { usernameRules, passwordRules } from './rules'
 export default {
+  components: {
+    Head
+  },
   data () {
     return {
       user: {

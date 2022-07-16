@@ -2,7 +2,7 @@
   <div>
     <!-- 头部搜索框 -->
     <div class="navbar">
-      <van-search v-model="value" placeholder="请输入搜索关键词" class="search">
+      <van-search v-model="value" placeholder="请输入小区或地址" class="search">
         <template #left>
           <van-dropdown-menu>
             <van-dropdown-item v-model="value1" :options="option1" />
@@ -64,7 +64,7 @@
       <van-cell-group>
         <van-cell title="租房小组" value="更多" />
       </van-cell-group>
-      <van-grid :column-num="2">
+      <van-grid :column-num="2" :gutter="10">
         <van-grid-item icon="photo-o" text="文字" />
         <van-grid-item icon="photo-o" text="文字" />
         <van-grid-item icon="photo-o" text="文字" />

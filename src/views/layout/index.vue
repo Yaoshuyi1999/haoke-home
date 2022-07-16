@@ -2,7 +2,7 @@
   <div>
     <router-view></router-view>
     <div class="tabbar-bottom">
-      <van-tabbar v-model="active" active-color='rgb(33, 185, 122)'>
+      <van-tabbar route active-color='rgb(33, 185, 122)'>
         <van-tabbar-item to="/layout/home">
           <span>首页</span>
           <template #icon>
