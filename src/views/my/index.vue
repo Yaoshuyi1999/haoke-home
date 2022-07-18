@@ -5,7 +5,7 @@
       <van-image class="bg-img" :src="require('@/assets/avataring.png')" />
       <div class="myInfo">
         <div class="touxiang">
-          <img round :src="`${base}${userInfo.avatar}`"  class="ht_img"/>
+          <img round :src="`${base}${userInfo.avatar}`" class="ht_img" />
         </div>
         <div class="userName">
           <span>{{ userInfo.nickname }}</span>
@@ -40,13 +40,13 @@
     <!-- 分类 -->
     <div class="menu">
       <van-grid :column-num="3">
-        <van-grid-item to='/favorate'>
+        <van-grid-item to="/favorate">
           <template>
             <van-icon name="star-o" />
           </template>
           <span>我的收藏</span>
         </van-grid-item>
-        <van-grid-item to='/rent'>
+        <van-grid-item to="/rent">
           <template>
             <van-icon name="wap-home-o" />
           </template>
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { getUserInfo } from '@/api/user'
+import { getUserInfo } from '@/api'
 export default {
   data () {
     return {
@@ -119,9 +119,15 @@ export default {
         .catch(() => {})
     },
     async getUserInfo () {
-      const res = await getUserInfo()
-      console.log(res)
-      this.userInfo = res.data.body
+      if (this.isLogin) {
+        try {
+          const res = await getUserInfo()
+          // console.log(res)
+          this.userInfo = res.data.body
+        } catch (err) {
+          this.$toast.fail('请重新登录')
+        }
+      }
     }
   }
 }
@@ -216,7 +222,7 @@ export default {
   }
 }
 // 后台请求回来的图片
-.ht_img{
+.ht_img {
   width: 60px;
   height: 60px;
 }

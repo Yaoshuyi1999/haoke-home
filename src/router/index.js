@@ -41,6 +41,28 @@ const routes = [
   {
     path: '/rent',
     component: () => import('@/views/rent')
+    // children: [
+    //   {
+    //     path: 'add',
+    //     component: () => import('@/views/add')
+    //   }
+    // ]
+  },
+  {
+    path: '/city',
+    component: () => import('@/views/city')
+  },
+  {
+    path: '/map',
+    component: () => import('@/views/map')
+  },
+  {
+    path: '/rent/add',
+    component: () => import('@/views/add')
+  },
+  {
+    path: '/detail',
+    component: () => import('@/views/detail')
   }
 ]
 

@@ -2,11 +2,12 @@
   <div>
     <!-- 头部搜索框 -->
     <div class="navbar">
-      <van-search v-model="value" placeholder="请输入小区或地址" class="search">
+      <van-search placeholder="请输入小区或地址" class="search">
         <template #left>
-          <van-dropdown-menu>
-            <van-dropdown-item v-model="value1" :options="option1" />
-          </van-dropdown-menu>
+          <van-button type="default" size="small" to="/city">
+            上海
+            <i class="home home-xiajiantou"></i>
+          </van-button>
         </template>
       </van-search>
       <div class="ditu">
@@ -16,17 +17,14 @@
     <!-- 轮播图 -->
     <div class="banner">
       <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-        <van-swipe-item>
-          <img v-lazy="image" />
+        <van-swipe-item v-for="item in getSwiperList" :key="item.id">
+          <img :src="'http://liufusong.top:8080' + item.imgSrc" />
         </van-swipe-item>
-        <van-swipe-item>2</van-swipe-item>
-        <van-swipe-item>3</van-swipe-item>
-        <van-swipe-item>4</van-swipe-item>
       </van-swipe>
     </div>
     <!-- 分类选择 -->
     <van-grid class="choose">
-      <van-grid-item>
+      <van-grid-item to="/layout/search">
         <template #icon>
           <i class="home home-shouye1"></i>
         </template>
@@ -34,7 +32,7 @@
           <p>整租</p>
         </template>
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/layout/search">
         <template #icon>
           <i class="home home-pengyou"></i>
         </template>
@@ -42,7 +40,7 @@
           <p>合租</p>
         </template>
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to='/map'>
         <template #icon>
           <i class="home home-dituzhaofang"></i>
         </template>
@@ -50,7 +48,7 @@
           <p>地图找房</p>
         </template>
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/rent/add">
         <template #icon>
           <i class="home home-zufang"></i>
         </template>
@@ -65,25 +63,52 @@
         <van-cell title="租房小组" value="更多" />
       </van-cell-group>
       <van-grid :column-num="2" :gutter="10">
-        <van-grid-item icon="photo-o" text="文字" />
-        <van-grid-item icon="photo-o" text="文字" />
-        <van-grid-item icon="photo-o" text="文字" />
-        <van-grid-item icon="photo-o" text="文字" />
+        <van-grid-item v-for="item in getGroupsList" :key="item.id">
+          <img
+            :src="'http://liufusong.top:8080' + item.imgSrc"
+            class="left_img"
+          />
+          <span class="right_text">
+            <p>{{ item.title }}</p>
+            <p>{{ item.desc }}</p>
+          </span>
+        </van-grid-item>
       </van-grid>
     </div>
   </div>
 </template>
 
 <script>
+import { getSwiper, getGroups } from '@/api'
 export default {
   data () {
     return {
-      value1: 0,
-      option1: [
-        { text: '上海', value: 0 },
-        { text: '杭州', value: 1 },
-        { text: '苏州', value: 2 }
-      ]
+      getSwiperList: {},
+      getGroupsList: {}
+    }
+  },
+  created () {
+    this.getSwiper()
+    this.getGroups()
+  },
+  methods: {
+    async getSwiper () {
+      try {
+        const res = await getSwiper()
+        // console.log(res.data.body)
+        this.getSwiperList = res.data.body
+      } catch (err) {
+        this.$toast.fail('请重新刷新网络')
+      }
+    },
+    async getGroups () {
+      try {
+        const res = await getGroups()
+        // console.log(res)
+        this.getGroupsList = res.data.body
+      } catch (err) {
+        this.$toast.fail('请重新刷新网络')
+      }
     }
   }
 }
@@ -115,6 +140,14 @@ export default {
     :deep(.van-dropdown-menu__bar) {
       height: 0;
     }
+    .van-button--default {
+      border: none;
+      padding-right: 10px;
+      border-right: 1px solid #888;
+      i{
+        font-size: 12px;
+      }
+    }
   }
   .ditu {
     width: 20px;
@@ -133,27 +166,31 @@ export default {
 }
 // 轮播图
 .banner {
-  .my-swipe .van-swipe-item {
-    color: #fff;
-    font-size: 20px;
-    line-height: 150px;
-    text-align: center;
-    background-color: #39a9ed;
+  height: 212px;
+  img {
+    height: 212px;
+  }
+  :deep(.van-swipe__indicator) {
+    background-color: #ccc;
+  }
+  :deep(.am-carousel-wrap-dot-active > span) {
+    background-color: #888;
   }
 }
 // 分类选择
 .choose {
+  margin-top: 10px;
   i {
+    // background-color: rgb(224, 70, 13);
     background-color: rgb(242, 251, 247);
-    font-size: 24px;
+    font-size: 36px;
     padding: 10px;
     border-radius: 50%;
     color: rgb(2, 174, 102);
-    font-weight: 700;
   }
   .van-grid-item__content {
     p {
-      font-size: 14px;
+      font-size: 15px;
       margin-top: 18px;
     }
   }
@@ -161,7 +198,6 @@ export default {
 // 租房小组
 .group {
   background-color: #f6f5f6;
-  padding: 0 10px;
   :deep(.van-cell-group) {
     background-color: #f6f5f6;
   }
@@ -169,6 +205,25 @@ export default {
     background-color: #f6f5f6;
     .van-cell__title {
       font-weight: bold;
+    }
+  }
+  :deep(.van-grid-item__content) {
+    display: flex;
+    -webkit-flex-direction: unset;
+    flex-direction: unset;
+    padding: 10px 0 20px;
+    justify-content: left;
+    .left_img {
+      width: 50px;
+      height: 50px;
+      margin: 0 10px;
+    }
+    .right_text {
+      font-size: 14px;
+      color: #333;
+      p {
+        margin: 0;
+      }
     }
   }
 }

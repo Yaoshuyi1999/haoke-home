@@ -37,7 +37,7 @@
 
 <script>
 import Head from '@/components/head.vue'
-import { login } from '@/api/user'
+import { login } from '@/api'
 import { usernameRules, passwordRules } from './rules'
 export default {
   components: {
@@ -67,7 +67,7 @@ export default {
       try {
         const res = await login(this.user)
         this.$store.commit('setUser', res.data.body.token)
-        console.log(res)
+        // console.log(res)
         this.$toast.success('登录成功')
         if (res.data.status === 200) {
           this.$toast.success('登录成功')
@@ -109,7 +109,7 @@ export default {
 }
 // 账号密码样式
 .form {
-  margin: 20px 15px 0;
+  margin: 48px 15px 0;
   :deep(.van-field__control) {
     font-size: 17px;
     height: 60px;
