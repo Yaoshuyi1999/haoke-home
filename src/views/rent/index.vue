@@ -5,11 +5,7 @@
       <List
         v-for="item in getRentList"
         :key="item.houseCode"
-        :title="item.title"
-        :desc="item.desc"
-        :tags="item.tags"
-        :price="item.price"
-        :imgUrl='item.houseImg'
+        :houseList="item"
       ></List>
     </ul>
   </div>
@@ -46,8 +42,8 @@ export default {
 }
 </script>
 
-<style scoped lang='less'>
-ul{
+<style scoped lang="less">
+ul {
   margin-top: 48px;
 }
 </style>

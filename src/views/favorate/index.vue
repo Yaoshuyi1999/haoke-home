@@ -5,11 +5,7 @@
       <List
         v-for="item in getFavoritesList"
         :key="item.houseCode"
-        :title="item.title"
-        :desc="item.desc"
-        :tags="item.tags"
-        :price="item.price"
-        :imgUrl='item.houseImg'
+        :houseList="item"
       ></List>
     </ul>
   </div>
@@ -36,7 +32,7 @@ export default {
     async getFavorites () {
       try {
         const res = await getFavorites()
-        // console.log(res)
+        console.log(res)
         this.getFavoritesList = res.data.body
       } catch (err) {
         this.$toast.fail('请重新刷新网络')
@@ -46,8 +42,8 @@ export default {
 }
 </script>
 
-<style scoped lang='less'>
-ul{
+<style scoped lang="less">
+ul {
   margin-top: 48px;
 }
 </style>

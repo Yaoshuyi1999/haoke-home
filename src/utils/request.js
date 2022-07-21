@@ -11,8 +11,10 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     const token = store.state.user
+    // const id = store.state.cityId
     // 在发送请求之前做些什么
     config.headers.Authorization = token
+    // config.params.id = id
     return config
   },
   (error) => {

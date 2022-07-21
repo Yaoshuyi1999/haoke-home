@@ -1,8 +1,8 @@
 @font-face {
   font-family: "home"; /* Project id 3522019 */
-  src: url('iconfont.woff2?t=1658045381536') format('woff2'),
-       url('iconfont.woff?t=1658045381536') format('woff'),
-       url('iconfont.ttf?t=1658045381536') format('truetype');
+  src: url('iconfont.woff2?t=1658331944797') format('woff2'),
+       url('iconfont.woff?t=1658331944797') format('woff'),
+       url('iconfont.ttf?t=1658331944797') format('truetype');
 }
 
 .home {
@@ -11,6 +11,54 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.home-shimingrenzheng:before {
+  content: "\e65c";
+}
+
+.home-jinzhi:before {
+  content: "\e608";
+}
+
+.home-wuxian:before {
+  content: "\e6b5";
+}
+
+.home-air-conditioning:before {
+  content: "\e648";
+}
+
+.home-dianshi:before {
+  content: "\e64e";
+}
+
+.home-xiyiji:before {
+  content: "\e90d";
+}
+
+.home-yigui:before {
+  content: "\e60a";
+}
+
+.home-bingxiang:before {
+  content: "\ec4f";
+}
+
+.home-nuanqi:before {
+  content: "\e60f";
+}
+
+.home-linyu1:before {
+  content: "\e645";
+}
+
+.home-shafa:before {
+  content: "\e646";
+}
+
+.home-tianranqi-01:before {
+  content: "\e613";
 }
 
 .home-xiajiantou:before {

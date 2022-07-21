@@ -5,7 +5,7 @@
       <van-search placeholder="请输入小区或地址" class="search">
         <template #left>
           <van-button type="default" size="small" to="/city">
-            上海
+            {{ $store.state.cityLabel }}
             <i class="home home-xiajiantou"></i>
           </van-button>
         </template>
@@ -16,9 +16,20 @@
     </div>
     <!-- 轮播图 -->
     <div class="banner">
-      <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+      <van-swipe
+        class="my-swipe"
+        :autoplay="3000"
+        indicator-color="white"
+        height="212"
+      >
         <van-swipe-item v-for="item in getSwiperList" :key="item.id">
-          <img :src="'http://liufusong.top:8080' + item.imgSrc" />
+          <template #default>
+            <img
+              class="pic"
+              :src="'http://liufusong.top:8080' + item.imgSrc"
+              style="height: 212px"
+            />
+          </template>
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -40,7 +51,7 @@
           <p>合租</p>
         </template>
       </van-grid-item>
-      <van-grid-item to='/map'>
+      <van-grid-item to="/map">
         <template #icon>
           <i class="home home-dituzhaofang"></i>
         </template>
@@ -84,7 +95,8 @@ export default {
   data () {
     return {
       getSwiperList: {},
-      getGroupsList: {}
+      getGroupsList: {},
+      test: ''
     }
   },
   created () {
@@ -104,7 +116,7 @@ export default {
     async getGroups () {
       try {
         const res = await getGroups()
-        // console.log(res)
+        console.log(res)
         this.getGroupsList = res.data.body
       } catch (err) {
         this.$toast.fail('请重新刷新网络')
@@ -114,76 +126,47 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 // 头部搜索的样式
 .navbar {
+  padding: 0 0.125rem;
   position: absolute;
-  top: 25px;
+  top: 0.3125rem;
+  z-index: 999;
   width: 100%;
-  padding: 0 10px;
   box-sizing: border-box;
   display: flex;
-  z-index: 999;
   align-items: center;
+  .van-search {
+    background-color: unset;
+  }
   .search {
     flex: 1;
-    height: 32px;
-    margin: 0 10px;
-    padding: 0 5px;
-    border-radius: 3px;
-    background-color: rgb(255, 255, 255);
-    font-size: 13px;
-    .van-search__content {
-      margin-left: 20px;
+    van-button {
       height: 100%;
-    }
-    :deep(.van-dropdown-menu__bar) {
-      height: 0;
-    }
-    .van-button--default {
-      border: none;
-      padding-right: 10px;
-      border-right: 1px solid #888;
-      i{
-        font-size: 12px;
-      }
     }
   }
   .ditu {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
-    border: 2px solid rgb(255, 255, 255);
-    margin-top: 5px;
+    border: 0.025rem solid rgb(255, 255, 255);
+    line-height: 25px;
     .home-ditu {
       display: flex;
       justify-content: center;
-      align-items: center;
-      font-size: 18px;
+      font-size: 20px;
       color: #fff;
     }
   }
 }
-// 轮播图
-.banner {
-  height: 212px;
-  img {
-    height: 212px;
-  }
-  :deep(.van-swipe__indicator) {
-    background-color: #ccc;
-  }
-  :deep(.am-carousel-wrap-dot-active > span) {
-    background-color: #888;
-  }
-}
 // 分类选择
 .choose {
-  margin-top: 10px;
+  margin-top: 0.125rem;
   i {
     // background-color: rgb(224, 70, 13);
     background-color: rgb(242, 251, 247);
-    font-size: 36px;
+    font-size: 34px;
     padding: 10px;
     border-radius: 50%;
     color: rgb(2, 174, 102);

@@ -1,15 +1,17 @@
 <template>
-  <li>
+  <li @click="clickFn">
     <div class="house">
-      <div class="pic"><img :src="`${baseUrl}${imgUrl}`" /></div>
+      <div class="pic"><img :src="`${baseUrl}${houseList.houseImg}`" /></div>
       <div class="text">
-        <div class="dan">{{ title }}</div>
-        <div class="desc">{{ desc }}</div>
+        <div class="dan">{{ houseList.title }}</div>
+        <div class="desc">{{ houseList.desc }}</div>
         <div class="tag">
-          <span v-for="(str, index) in tags" :key="index">{{ str }}</span>
+          <span v-for="(str, index) in houseList.tags" :key="index">{{
+            str
+          }}</span>
         </div>
         <div class="price">
-          {{ price }}
+          {{ houseList.price }}
           <span>元/月</span>
         </div>
       </div>
@@ -24,7 +26,20 @@ export default {
       baseUrl: 'http://liufusong.top:8080'
     }
   },
-  props: ['title', 'desc', 'tags', 'price', 'imgUrl']
+  props: {
+    houseList: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    // 点击列表项，跳转至详情页面
+    clickFn () {
+      // console.log(this.houseList.houseCode)
+      this.$store.commit('changeHouse', this.houseList.houseCode)
+      this.$router.push('/detail')
+    }
+  }
 }
 </script>
 

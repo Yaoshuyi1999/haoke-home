@@ -13,6 +13,8 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'vue/multi-word-component-names': 'off',
     'array-callback-return': 'off',
-    'no-undef': 'off'
+    'no-undef': 'off',
+    'no-unused-vars': 'off',
+    'space-before-function-paren': 'off'
   }
 }

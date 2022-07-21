@@ -56,7 +56,7 @@ export default {
         'Z'
       ],
       getHotList: [],
-      indexCity: { label: '上海' }
+      indexCity: { label: this.$store.state.cityLabel }
     }
   },
   components: {
@@ -70,9 +70,9 @@ export default {
     async getCity () {
       try {
         const res = await getCity()
-        // console.log(res)
+        console.log(res)
         this.getCityList = res.data.body
-        // console.log(this.getCityList)
+        // console.log(this.getCityList.dep.id)
 
         // 得到的是所有的存在的首字母以及内容对象
         // provice里面放的对象是key：ABC这类，value：相关首字母的对象
@@ -141,11 +141,13 @@ export default {
         this.$toast.fail('请重新刷新网络')
       }
     },
-    clickFn (value) {
-      // console.log(value)
-      this.indexCity = value
+    clickFn (name) {
+      // console.log(value.label)
+      this.indexCity = name
+      this.$store.commit('changeCity', name.label, name.value)
       this.getCityList = []
       this.getCity()
+      this.$router.back()
     }
   }
 }
@@ -170,11 +172,14 @@ export default {
     height: 90%;
   }
   :deep(.van-index-bar__index) {
-    flex: 1;
+    height: 80%;
+    margin-right: 10px;
+    padding: 0;
     color: #333;
     font-size: 14px;
   }
   :deep(.van-index-bar__index--active) {
+    height: 15px;
     border-radius: 50%;
     background-color: #21b97a;
     color: #fff;

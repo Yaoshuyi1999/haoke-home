@@ -10,6 +10,7 @@ export const getCity = () => {
   })
 }
 
+// 获得热门城市数据
 export const getHot = () => {
   return request({
     url: '/area/hot'
