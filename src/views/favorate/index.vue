@@ -16,7 +16,7 @@ import Head from '@/components/head.vue'
 import List from '@/components/list.vue'
 import { getFavorites } from '@/api'
 export default {
-  data () {
+  data() {
     return {
       getFavoritesList: {}
     }
@@ -25,11 +25,11 @@ export default {
     Head,
     List
   },
-  created () {
+  created() {
     this.getFavorites()
   },
   methods: {
-    async getFavorites () {
+    async getFavorites() {
       try {
         const res = await getFavorites()
         console.log(res)

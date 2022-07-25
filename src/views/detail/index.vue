@@ -120,11 +120,13 @@
     <!-- 猜你喜欢 -->
     <div class="guess-favorite">
       <p>猜你喜欢</p>
-      <!-- <List
-        v-for="item in getFavoritesList"
-        :key="item.houseCode"
-        :houseList="item"
-      ></List> -->
+      <ul>
+        <List
+          v-for="item in getFavoritesList.slice(0, 3)"
+          :key="item.houseCode"
+          :houseList="item"
+        ></List>
+      </ul>
     </div>
     <!-- 底部导航栏-->
     <div class="house-bottom">
@@ -139,20 +141,22 @@
 
 <script>
 import Head from '@/components/head.vue'
-// import List from '@/components/list.vue'
-import { getHouse } from '@/api'
+import List from '@/components/list.vue'
+import { getHouse, getFavorites } from '@/api'
 export default {
   data() {
     return {
-      getHouseList: {}
+      getHouseList: {},
+      getFavoritesList: {}
     }
   },
   components: {
-    Head
-    // List
+    Head,
+    List
   },
   created() {
     this.getHouse()
+    this.getFavorites()
   },
   methods: {
     async getHouse() {
@@ -160,6 +164,15 @@ export default {
         const res = await getHouse(this.$store.state.houseId)
         console.log(res)
         this.getHouseList = res.data.body
+      } catch (err) {
+        this.$toast.fail('请重新刷新网络')
+      }
+    },
+    async getFavorites() {
+      try {
+        const res = await getFavorites()
+        console.log(res)
+        this.getFavoritesList = res.data.body
       } catch (err) {
         this.$toast.fail('请重新刷新网络')
       }
@@ -366,6 +379,7 @@ export default {
     .house-text {
       margin-top: 20px;
       font-size: 14px;
+      padding-bottom: 10px;
     }
   }
   // 猜你喜欢
@@ -373,11 +387,12 @@ export default {
     background-color: #fff;
     padding: 0 10px;
     margin-top: 10px;
-    border-bottom: 1px solid #cecece;
     p {
+      font-weight: 600;
       margin: 0;
       font-size: 15px;
       padding: 10px 0;
+      border-bottom: 1px solid #cecece;
     }
   }
   // 底部导航栏
