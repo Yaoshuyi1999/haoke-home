@@ -22,7 +22,7 @@
 import Head from '@/components/head.vue'
 import { getCity, getHot } from '@/api'
 export default {
-  data () {
+  data() {
     return {
       indexList: [], // 索引字符
       filterData: [], // 处理后的 待渲染数据
@@ -62,12 +62,12 @@ export default {
   components: {
     Head
   },
-  created () {
+  created() {
     this.getCity()
     this.getHot()
   },
   methods: {
-    async getCity () {
+    async getCity() {
       try {
         const res = await getCity()
         console.log(res)
@@ -132,7 +132,7 @@ export default {
         this.$toast.fail('请重新刷新网络')
       }
     },
-    async getHot () {
+    async getHot() {
       try {
         const res = await getHot()
         // console.log(res)
@@ -141,10 +141,11 @@ export default {
         this.$toast.fail('请重新刷新网络')
       }
     },
-    clickFn (name) {
+    clickFn(name) {
       // console.log(value.label)
       this.indexCity = name
-      this.$store.commit('changeCity', name.label, name.value)
+      this.$store.commit('changeCityLabel', name.label)
+      this.$store.commit('changeCityValue', name.value)
       this.getCityList = []
       this.getCity()
       this.$router.back()

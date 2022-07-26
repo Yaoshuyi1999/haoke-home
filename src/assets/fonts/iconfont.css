@@ -1,8 +1,8 @@
 @font-face {
   font-family: "home"; /* Project id 3522019 */
-  src: url('iconfont.woff2?t=1658331944797') format('woff2'),
-       url('iconfont.woff?t=1658331944797') format('woff'),
-       url('iconfont.ttf?t=1658331944797') format('truetype');
+  src: url('iconfont.woff2?t=1658728767235') format('woff2'),
+       url('iconfont.woff?t=1658728767235') format('woff'),
+       url('iconfont.ttf?t=1658728767235') format('truetype');
 }
 
 .home {
@@ -11,6 +11,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.home-chuang:before {
+  content: "\e609";
 }
 
 .home-shimingrenzheng:before {

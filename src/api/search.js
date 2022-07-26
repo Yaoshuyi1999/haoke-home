@@ -10,3 +10,11 @@ export const getCondition = () => {
     }
   })
 }
+
+// 根据条件查询房屋
+export const getHousesInfo = (params) => {
+  return request({
+    url: '/houses',
+    params
+  })
+}

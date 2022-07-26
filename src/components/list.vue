@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       baseUrl: 'http://liufusong.top:8080'
     }
@@ -34,10 +34,15 @@ export default {
   },
   methods: {
     // 点击列表项，跳转至详情页面
-    clickFn () {
+    clickFn() {
       // console.log(this.houseList.houseCode)
       this.$store.commit('changeHouse', this.houseList.houseCode)
-      this.$router.push('/detail')
+      this.$router.push({
+        path: '/detail',
+        query: {
+          code: this.houseList.houseCode
+        }
+      })
     }
   }
 }

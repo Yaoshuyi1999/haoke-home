@@ -15,6 +15,7 @@ module.exports = {
     'array-callback-return': 'off',
     'no-undef': 'off',
     'no-unused-vars': 'off',
-    'space-before-function-paren': 'off'
+    'space-before-function-paren': 'off',
+    'space-infix-ops': 'off'
   }
 }

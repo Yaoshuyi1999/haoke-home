@@ -32,7 +32,7 @@ export default {
     async getFavorites() {
       try {
         const res = await getFavorites()
-        console.log(res)
+        // console.log(res)
         this.getFavoritesList = res.data.body
       } catch (err) {
         this.$toast.fail('请重新刷新网络')

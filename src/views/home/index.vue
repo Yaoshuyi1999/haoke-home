@@ -10,7 +10,7 @@
           </van-button>
         </template>
       </van-search>
-      <div class="ditu">
+      <div class="ditu" @click="$router.push('/map')">
         <i class="home home-ditu"></i>
       </div>
     </div>
@@ -92,19 +92,19 @@
 <script>
 import { getSwiper, getGroups } from '@/api'
 export default {
-  data () {
+  data() {
     return {
       getSwiperList: {},
       getGroupsList: {},
       test: ''
     }
   },
-  created () {
+  created() {
     this.getSwiper()
     this.getGroups()
   },
   methods: {
-    async getSwiper () {
+    async getSwiper() {
       try {
         const res = await getSwiper()
         // console.log(res.data.body)
@@ -113,10 +113,10 @@ export default {
         this.$toast.fail('请重新刷新网络')
       }
     },
-    async getGroups () {
+    async getGroups() {
       try {
         const res = await getGroups()
-        console.log(res)
+        // console.log(res)
         this.getGroupsList = res.data.body
       } catch (err) {
         this.$toast.fail('请重新刷新网络')

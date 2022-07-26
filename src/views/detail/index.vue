@@ -54,7 +54,7 @@
       <!-- 第三部分 -->
       <div class="house-decorate">
         <div class="decorate-left">
-          <p><span>装修:</span>{{ getHouseList.tags[0] }}</p>
+          <p><span>装修:</span>精装</p>
           <p><span>楼层:</span>{{ getHouseList.floor }}</p>
         </div>
         <div class="decorate-right">
@@ -122,7 +122,7 @@
       <p>猜你喜欢</p>
       <ul>
         <List
-          v-for="item in getFavoritesList.slice(0, 3)"
+          v-for="item in getFavoritesList"
           :key="item.houseCode"
           :houseList="item"
         ></List>
@@ -130,7 +130,12 @@
     </div>
     <!-- 底部导航栏-->
     <div class="house-bottom">
-      <div><van-icon name="star-o" />收藏</div>
+      <div @click="clickFavorite">
+        <van-icon
+          :name="isFavorite ? 'star' : 'star-o'"
+          :color="isFavorite ? 'red' : ''"
+        />收藏
+      </div>
       <div>在线咨询</div>
       <div class="calllast">
         <a href="tel:400-618-4000">电话预约</a>
@@ -142,12 +147,19 @@
 <script>
 import Head from '@/components/head.vue'
 import List from '@/components/list.vue'
-import { getHouse, getFavorites } from '@/api'
+import {
+  getHouse,
+  getFavorites,
+  getIfFavorites,
+  getAddFavorites,
+  getDeleteFavorites
+} from '@/api'
 export default {
   data() {
     return {
       getHouseList: {},
-      getFavoritesList: {}
+      getFavoritesList: {},
+      isFavorite: false
     }
   },
   components: {
@@ -156,23 +168,24 @@ export default {
   },
   created() {
     this.getHouse()
-    this.getFavorites()
   },
   methods: {
     async getHouse() {
       try {
-        const res = await getHouse(this.$store.state.houseId)
-        console.log(res)
+        // 房屋信息
+        // const res = await getHouse(this.$store.state.houseId)
+        const res = await getHouse(this.$route.query.code)
+        // console.log(res)
         this.getHouseList = res.data.body
-      } catch (err) {
-        this.$toast.fail('请重新刷新网络')
-      }
-    },
-    async getFavorites() {
-      try {
-        const res = await getFavorites()
-        console.log(res)
-        this.getFavoritesList = res.data.body
+        // 猜你喜欢
+        const res1 = await getFavorites()
+        console.log(res1)
+        this.getFavoritesList = res1.data.body.slice(0, 3)
+        // 是否收藏
+        const res2 = await getIfFavorites(this.$route.query.code)
+        console.log(res2)
+        this.isFavorite = res2.data.body.isFavorite
+        console.log(this.isFavorite)
       } catch (err) {
         this.$toast.fail('请重新刷新网络')
       }
@@ -202,6 +215,16 @@ export default {
         default:
           return 'home-jinzhi'
       }
+    },
+    async clickFavorite() {
+      if (this.isFavorite) {
+        await getDeleteFavorites(this.$route.query.code)
+        this.$toast.success('取消收藏成功')
+      } else {
+        await getAddFavorites(this.$route.query.code)
+        this.$toast.success('收藏成功')
+      }
+      this.isFavorite = !this.isFavorite
     }
   }
 }

@@ -26,10 +26,10 @@ export default {
     }
   },
   methods: {
-    onConfirm () {
+    onConfirm() {
       console.log('确定')
     },
-    onCancel () {
+    onCancel() {
       console.log('取消')
     }
   }

@@ -1,15 +1,11 @@
-export * from './login'
-
-export * from './my'
-
-export * from './favorate'
-
-export * from './rent'
-
-export * from './home'
-
+export * from './add'
 export * from './city'
-
-export * from './search'
-
 export * from './detail'
+export * from './favorate'
+export * from './home'
+export * from './login'
+export * from './map'
+export * from './my'
+export * from './plot'
+export * from './rent'
+export * from './search'

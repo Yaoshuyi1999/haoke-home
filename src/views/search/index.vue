@@ -19,7 +19,7 @@
           </van-search>
         </template>
         <template #right>
-          <div class="ditu">
+          <div class="ditu" @click="$router.push('/map')">
             <i class="home home-ditu"></i>
           </div>
         </template>
@@ -35,19 +35,22 @@
       </van-dropdown-menu>
     </div>
     <!-- 列表 -->
+    <SearchList></SearchList>
   </div>
 </template>
 
 <script>
 import { getCondition } from '@/api'
-import DropdownMenu from './component/DropdownMenu.vue'
+import DropdownMenu from './component/DropdownMenu'
 import ChooseType from './component/ChooseType'
+import SearchList from './component/SearchList'
 export default {
   components: {
     DropdownMenu,
-    ChooseType
+    ChooseType,
+    SearchList
   },
-  data () {
+  data() {
     return {
       getConditionList: {}, // 得到的所有筛选数据
       price: [], // 表示的是租金的选项
@@ -56,25 +59,26 @@ export default {
       chooseType: {} // 表示的是筛选的选项
     }
   },
-  created () {
+  created() {
     this.getCondition()
   },
   methods: {
-    goBack () {
+    goBack() {
       this.$router.back()
     },
-    async getCondition () {
+    // 获取筛选条件
+    async getCondition() {
       try {
         const res = await getCondition()
         this.getConditionList = res.data.body
-        console.log(this.getConditionList)
+        // console.log(this.getConditionList)
         // 进行数据的变化
         this.jieGou(this.getConditionList)
       } catch (err) {
         this.$toast.fail('请重新刷新网络')
       }
     },
-    jieGou (value) {
+    jieGou(value) {
       let {
         area, // 区域
         characteristic, // 房屋亮点
@@ -100,10 +104,10 @@ export default {
       this.chooseType.oriented = oriented
       this.chooseType.floor = floor
       this.chooseType.characteristic = characteristic
-      console.log(this.chooseType)
+      // console.log(this.chooseType)
     },
     // 判断是否有children的存在，如果不存在则添加
-    panduan (k, obj) {
+    panduan(k, obj) {
       const flag = k in obj
       if (flag) {
         for (const key in obj.children) {
