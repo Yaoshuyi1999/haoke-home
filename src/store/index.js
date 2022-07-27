@@ -11,21 +11,17 @@ export default new Vuex.Store({
     cityId: 'AREA|88cff55c-aaa4-e2e0',
     houseId: '5cc4494549926d0e2b94c816',
     areaId: '', // 小区
-    areaName: ''
-    // houseParams: {
-    //   cityId: this.state.cityId, // ID地区AREA|88cff55c-aaa4-e2e0
-    //   area: '', // 地区AREA|88cff55c-aaa4-e2e0
-    //   subway: '', // 地铁subway - 地铁
-    //   rentType: '', // 整租true
-    //   price: '', // 价格null
-    //   more: '', // 复合查询CHARI76eb0532-8099-d1f4,FLOOR(1,ARE
-    //   roomType: '', // 房屋类型ROOMJd1a00384-5801-d5cd
-    //   oriented: '', // 朝向ORIENI61e99445-e95e-7f37
-    //   characteristic: '', // 标签CHAR76eb0532-8099-d1f4
-    //   floor: '', // 楼层FLOOR1
-    //   start: '', // 开始项1
-    //   end: '' // 结束项20
-    // }
+    areaName: '',
+    houseParams: {
+      cityId: 'AREA|88cff55c-aaa4-e2e0', // ID地区AREA|88cff55c-aaa4-e2e0
+      area: '', // 地区AREA|88cff55c-aaa4-e2e0
+      subway: '', // 地铁subway - 地铁
+      rentType: '', // 整租true
+      price: '', // 价格null
+      more: '', // 复合查询CHARI76eb0532-8099-d1f4,FLOOR(1,ARE
+      start: 1, // 开始项1
+      end: 20 // 结束项20
+    }
   },
   // 修改数据的地方
   mutations: {
@@ -41,6 +37,7 @@ export default new Vuex.Store({
     },
     changeCityValue(state, indexValue) {
       state.cityId = indexValue
+      state.houseParams.cityId = indexValue
     },
     // 修改房屋id
     changeHouse(state, houseCode) {
@@ -52,6 +49,10 @@ export default new Vuex.Store({
     },
     changeAreaId(state, areaId) {
       state.areaId = areaId
+    },
+    // 修改筛选
+    changeHouseParams(state, value) {
+      state.houseParams = value
     }
   }
 })

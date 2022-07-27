@@ -1,5 +1,5 @@
 <template>
-  <van-dropdown-item :title="title">
+  <van-dropdown-item :title="title" ref="dropdown">
     <van-picker
       show-toolbar
       toolbar-position="bottom"
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import eventBus from './EventBus'
 export default {
   props: {
     title: {
@@ -25,12 +26,50 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      toggle: ''
+    }
+  },
   methods: {
-    onConfirm() {
-      console.log('确定')
+    onConfirm(value, index) {
+      const params = this.$store.state.houseParams
+      // console.log(params)
+      // console.log('确定')
+      // console.log(value)
+      // console.log(index)
+      // console.log(this.title)
+      this.$refs.dropdown.toggle(false)
+      switch (this.title) {
+        case '区域':
+          const place = this.DropdownMenu[index[0]].value
+          const noplace = place === 'area' ? 'subway' : 'area'
+          params[place] =
+            this.DropdownMenu[index[0]].children[index[1]].children[
+              index[2]
+            ].value
+          params[noplace] = ''
+          console.log(params)
+          this.$store.commit('changeHouseParams', params)
+          break
+        case '方式':
+          params.rentType = value.value
+          console.log(params)
+          this.$store.commit('changeHouseParams', params)
+          break
+        case '租金':
+          params.price = value.value
+          console.log(params)
+          this.$store.commit('changeHouseParams', params)
+          break
+      }
+      eventBus.$emit('sendDropdown')
     },
+    // 切换菜单展示状态
     onCancel() {
-      console.log('取消')
+      // console.log('取消')
+      //
+      this.$refs.dropdown.toggle(false)
     }
   }
 }

@@ -3,8 +3,8 @@ import store from '@/store'
 
 const request = axios.create({
   // 请求根路径
-  baseURL: 'http://liufusong.top:8080',
-  timeout: 3000
+  baseURL: 'http://liufusong.top:8080'
+  // timeout: 3000
 })
 
 // 添加请求拦截器

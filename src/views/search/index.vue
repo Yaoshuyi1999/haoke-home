@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <!-- 头部搜索 -->
+  <div class="box">
     <div class="navbar">
+      <!-- 头部搜索 -->
       <van-nav-bar title="标题" left-text="返回" left-arrow>
         <template #left>
           <div class="back">
@@ -24,18 +24,21 @@
           </div>
         </template>
       </van-nav-bar>
+      <!-- 分类选择 -->
+      <div class="choose">
+        <van-dropdown-menu active-color="#21b97a">
+          <DropdownMenu title="区域" :DropdownMenu="address"></DropdownMenu>
+          <DropdownMenu title="方式" :DropdownMenu="rentType"></DropdownMenu>
+          <DropdownMenu title="租金" :DropdownMenu="price"></DropdownMenu>
+          <ChooseType title="筛选" :ChooseType="chooseType"></ChooseType>
+        </van-dropdown-menu>
+      </div>
     </div>
-    <!-- 分类选择 -->
-    <div class="choose">
-      <van-dropdown-menu active-color="#21b97a">
-        <DropdownMenu title="区域" :DropdownMenu="address"></DropdownMenu>
-        <DropdownMenu title="方式" :DropdownMenu="rentType"></DropdownMenu>
-        <DropdownMenu title="租金" :DropdownMenu="price"></DropdownMenu>
-        <ChooseType title="筛选" :ChooseType="chooseType"></ChooseType>
-      </van-dropdown-menu>
-    </div>
+
     <!-- 列表 -->
-    <SearchList></SearchList>
+    <div class="list">
+      <SearchList></SearchList>
+    </div>
   </div>
 </template>
 
@@ -92,9 +95,12 @@ export default {
 
       // 区域
       // console.log(this.address)
+      // console.log(area, '区域')
+      // console.log(subway, '地铁')
       area = this.panduan('children', area)
       subway = this.panduan('children', subway)
       this.address = [area, subway]
+      // console.log(this.address)
       // 租金
       this.price = price
       // 方式
@@ -104,7 +110,7 @@ export default {
       this.chooseType.oriented = oriented
       this.chooseType.floor = floor
       this.chooseType.characteristic = characteristic
-      // console.log(this.chooseType)
+      console.log(this.chooseType, 11)
     },
     // 判断是否有children的存在，如果不存在则添加
     panduan(k, obj) {
@@ -130,9 +136,12 @@ export default {
 <style lang="less" scoped>
 // 头部搜索样式
 .navbar {
+  position: fixed;
+  width: 100%;
   background-color: #21b97a;
   height: 46px;
   padding: 0 10px;
+  z-index: 999;
   .van-nav-bar {
     background-color: unset;
     :deep(.van-nav-bar__left) {
@@ -162,5 +171,10 @@ export default {
       }
     }
   }
+}
+.list {
+  padding-top: 96px;
+  padding-right: 10px;
+  padding-bottom: 50px;
 }
 </style>

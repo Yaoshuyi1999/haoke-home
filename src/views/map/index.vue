@@ -14,8 +14,8 @@ export default {
 }
 </script>
 
-<style scoped lang='less'>
-ul{
+<style scoped lang="less">
+ul {
   margin-top: 48px;
 }
 </style>

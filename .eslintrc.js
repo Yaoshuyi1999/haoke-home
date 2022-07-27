@@ -16,6 +16,8 @@ module.exports = {
     'no-undef': 'off',
     'no-unused-vars': 'off',
     'space-before-function-paren': 'off',
-    'space-infix-ops': 'off'
+    'space-infix-ops': 'off',
+    'no-case-declarations': 'off',
+    'eslint-plugin-vue': 'off'
   }
 }

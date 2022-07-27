@@ -1,13 +1,11 @@
 <template>
-  <van-dropdown-item :title="title" @open="openFn">
+  <van-dropdown-item :title="title" @open="openFn" ref="file" class="item">
     <template #default>
       <van-popup
         v-model="show"
         position="right"
         :style="{ width: '80%', height: '100%' }"
-        class="popup"
-        :get-container="getContainer"
-        :overlay="false"
+        get-container="body"
       >
         <van-cell
           v-for="(item, key) in ChooseType"
@@ -15,20 +13,22 @@
           :title="key | titleFilters"
         >
           <template #label>
-            <van-grid :column-num="2">
-              <van-grid-item
-                v-for="(value, index) in item"
-                :key="index"
-                :text="value.label"
-              >
-              </van-grid-item>
-            </van-grid>
+            <van-button
+              v-for="(value, index) in item"
+              :key="index"
+              type="primary"
+              size="small"
+              :text="value.label"
+              :class="{ active: more.includes(value.value) }"
+              @click="chooseFn(key, value.value)"
+            >
+            </van-button>
           </template>
         </van-cell>
 
-        <div class="btn">
-          <van-button type="default">清除</van-button>
-          <van-button type="default">确定</van-button>
+        <div class="cancle-confirm">
+          <van-button type="default" @click="clearFn">清除</van-button>
+          <van-button type="default" @click="confirmFn">确定</van-button>
         </div>
       </van-popup>
     </template>
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import eventBus from './EventBus'
 export default {
   props: {
     title: {
@@ -47,19 +48,45 @@ export default {
       required: true
     }
   },
-  data () {
+  data() {
     return {
-      show: false
+      show: false,
+      more: []
     }
   },
   methods: {
-    openFn () {
+    openFn() {
       this.show = true
+    },
+    clearFn() {
+      console.log('清除')
+      this.more = []
+      // console.log($refs.file)
+    },
+    confirmFn() {
+      const params = this.$store.state.houseParams
+      params.more = this.more.join(',')
+      console.log('确认')
+      this.$store.commit('changeHouseParams', params)
+      this.show = false
+      eventBus.$emit('sendDropdown')
+    },
+    // 点击相应标签
+    async chooseFn(key, value) {
+      console.log(1)
+      console.log(key)
+      console.log(value)
+      if (this.more.includes(value)) {
+        const index = this.more.findIndex((ele) => ele === value)
+        return this.more.splice(index, 1)
+      }
+      this.more.push(value)
+      // console.log(this.more)
     }
   },
   // 过滤器
   filters: {
-    titleFilters (index) {
+    titleFilters(index) {
       switch (index) {
         case 'characteristic':
           return '房屋亮点'
@@ -76,56 +103,48 @@ export default {
 </script>
 
 <style scoped lang="less">
-/deep/.van-dropdown-item {
-  z-index: 999;
+/deep/.active {
+  color: #21b97a !important;
+  background-color: #defaef !important;
 }
-.popup {
-  .van-cell {
-    font-size: 15px;
-    color: #333;
+/deep/.van-button--primary {
+  background-color: #fff;
+  color: #888888;
+  width: 70px;
+  height: 32px;
+  margin: 10px 5px 10px 30px;
+  border: 0;
+
+  /deep/.van-button--hairline::after {
+    border-color: black;
+    border-radius: 10px;
   }
-  .van-grid {
-    padding: 0;
-    width: 80%;
-    border-bottom: 1px solid #ddd;
-    padding: 0 40px 10px 0;
+  .van-button__content {
+    border: 0;
   }
-  .van-cell__label {
-    margin: 10px 10px 0 30px;
+}
+
+.cancle-confirm {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  height: 50px;
+  width: 100%;
+  font-size: 18px;
+  text-align: center;
+  line-height: 50px;
+  .van-button:nth-child(1) {
+    height: 100%;
+    flex: 35%;
+    border: 1px solid #e3e5e6;
+    color: #21b97a;
+    background-color: #fff;
   }
-  /deep/.van-grid-item__text {
-    font-size: 12px;
-    color: #888;
-    height: 32px;
-    width: 70px;
-    border: 1px solid #ddd;
-    text-align: center;
-    line-height: 32px;
-    margin-bottom: 15px;
-  }
-  /deep/.van-grid-item__content {
-    padding: 0;
-    margin: 0;
-  }
-  .btn {
-    width: 100%;
-    height: 50px;
-    position: sticky;
-    bottom: 0;
-    z-index: 999;
-    button {
-      height: 100%;
-      font-size: 18px;
-    }
-    button:first-child {
-      width: 35%;
-      color: #21b97a;
-    }
-    button:last-child {
-      width: 65%;
-      background-color: #21b97a;
-      color: #fff;
-    }
+  .van-button:nth-child(2) {
+    height: 100%;
+    flex: 70%;
+    background-color: #21b97a;
+    color: #fff;
   }
 }
 </style>
